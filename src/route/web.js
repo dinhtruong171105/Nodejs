@@ -7,7 +7,7 @@ let initWebRoutes = (app) => {
     route.get('/', homeController.getHomePage);
     route.get('/about', homeController.getAboutPage);
     route.get('/sign_inout', homeController.getSignInOutPage);
-
+    route.get('/database', homeController.getDatabase);
 
     route.get('/chonjohn', (req, res) => {
         return res.send('Hello Chon_John!!!!! (web.js )')
