@@ -23,9 +23,14 @@ let getDatabase = async (req, res) => {
     }
 }
 
+let getBuyingPage = (req, res) => {
+    return res.render('buying.ejs')
+}
+
 module.exports = {
     getHomePage: getHomePage,
     getAboutPage: getAboutPage,
     getSignInOutPage: getSignInOutPage,
     getDatabase: getDatabase,
+    getBuyingPage: getBuyingPage,
 }
