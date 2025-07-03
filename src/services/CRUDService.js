@@ -1,5 +1,6 @@
 import { raw } from 'body-parser';
 import db from '../models/index'
+import { request } from 'express';
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -42,7 +43,7 @@ let hashUserPassword = (password) => {
 let getAllUser = () => {
     return new Promise(async (resolve, reject) => {
         try {
-            let users = db.User.findAll({
+            let users = await db.User.findAll({
                 raw: true,
             });
             resolve(users);
@@ -53,7 +54,68 @@ let getAllUser = () => {
     })
 }
 
+let getUserInfoById = (userId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.User.findOne({
+                where: { id: userId },
+                raw: true,
+            })
+
+            if (user) {
+                resolve(user);
+            }
+
+            else {
+                resolve({});
+            }
+
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+let updateUserData = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await db.User.update({
+                firstName: data.firstName,
+                lastName: data.lastName,
+                address: data.address,
+                gender: data.gender
+            }, { where: { id: data.id } });
+            let allUsers = await db.User.findAll();
+            resolve(allUsers);
+        } catch (e) {
+            console.log(e);
+            reject(e);
+        }
+    })
+}
+
+let deleteUserById = (userId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.User.findOne({
+                where: { id: userId }
+            })
+
+            if (user) {
+                await user.destroy();
+            }
+
+            resolve();
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     createNewUser: createNewUser,
     getAllUser: getAllUser,
+    getUserInfoById: getUserInfoById,
+    updateUserData: updateUserData,
+    deleteUserById: deleteUserById,
 }

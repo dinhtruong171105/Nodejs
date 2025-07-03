@@ -21,11 +21,29 @@
         tr:nth-child(even) {
             background-color: #dddddd;
         }
+
+        .btn-edit {
+            border-radius: 5px;
+            background: orange;
+            outline: none;
+            border: none;
+            color: black;
+            cursor: pointer;
+        }
+
+        .btn-delete {
+            border-radius: 5px;
+            background: red;
+            outline: none;
+            border: none;
+            color: black;
+            cursor: pointer;
+        }
     </style>
 </head>
 
 <body>
-    <h2>HTML Table</h2>
+    <h2>USERS</h2>
 
     <table>
         <tr>
@@ -37,6 +55,8 @@
             <th>Gender</th>
             <th>RoleID</th>
             <th>Phone Number</th>
+            <th>Actions</th>
+
         </tr>
         <% for(var i=0; i < dataTable.length; i++) { %>
             <tr>
@@ -63,6 +83,11 @@
                 </td>
                 <td>
                     <%= dataTable[i].phonenumber %>
+                </td>
+                <td>
+                    <a href="/edit-crud?id=<%= dataTable[i].id %>" class="btn-edit" type="button">Edit</a>
+                    <a href="/delete-crud?id=<%= dataTable[i].id %>" class="btn-delete"
+                        onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?')" type="button">Delete</a>
                 </td>
             </tr>
             <% } %>
